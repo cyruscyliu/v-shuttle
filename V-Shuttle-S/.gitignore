@@ -1,0 +1,10 @@
+# AFL
+*in*
+*out*
+*seed*
+# QEMU
+qemu-5.1.0*
+# Coverage
+profile*
+# log
+*.log

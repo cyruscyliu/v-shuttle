@@ -4,6 +4,8 @@
 #include "hw/pci/pci.h"
 #include "hw/dma/i8257.h"
 
+void write_seed_file(void *buf, size_t buf_size, uint32_t oid);
+
 #define memory_region_init_io(mr, owner, ops, opaque, name, size); \
         hook_memory_region_init_io(mr, owner, ops, opaque, name, size);
 
@@ -108,7 +110,7 @@ void record_write_ops(void *write, hwaddr addr, uint64_t data, unsigned size) {
                 callback.reg = addr;
                 callback.val = data;
                 callback.index = size;
-                write_seed_file(&callback, sizeof(struct Callback), 0);
+                write_seed_file((void *)&callback, sizeof(struct Callback), 0);
                 break;
             }
         }
@@ -375,10 +377,6 @@ void fuzzing_entry(void) {
         write_ops[i](opaque_ops[i], callback.reg % size_ops[i] - callback.reg % access_size, callback.val, access_size);
     }
     timer_mod(fuzz_timer, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
-    if(exec_times++>2000) {
-        __gcov_flush();
-        exec_times = 0;
-    }
     return;
 }
 
@@ -423,10 +421,6 @@ void isa_fuzzing_entry(void) {
         write_ops[i](opaque_ops[i], reg % size_ops[i] - reg % access_size, val, access_size);
     }
     timer_mod(isa_fuzz_timer, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
-    if(exec_times++>2000) {
-        __gcov_flush();
-        exec_times = 0;
-    }
     return;
 }
 

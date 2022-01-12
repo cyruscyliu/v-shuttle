@@ -1,0 +1,18 @@
+--- softmmu/memory.c	2022-01-12 14:35:39.392323366 +0100
++++ softmmu/memory.c	2022-01-12 12:40:19.269075961 +0100
+@@ -34,6 +34,7 @@
+ #include "sysemu/accel.h"
+ #include "hw/boards.h"
+ #include "migration/vmstate.h"
++#include "hook-write.h"
+ 
+ //#define DEBUG_UNASSIGNED
+ 
+@@ -480,6 +481,7 @@
+         hwaddr abs_addr = memory_region_to_absolute_addr(mr, addr);
+         trace_memory_region_ops_write(get_cpu_index(), mr, abs_addr, tmp, size);
+     }
++    record_write_ops(mr->ops->write, addr, tmp, size);
+     mr->ops->write(mr->opaque, addr, tmp, size);
+     return MEMTX_OK;
+ }
