@@ -1,5 +1,11 @@
 ## V-SHUTTLE Semantics-Aware Fuzzing Mode
 
+### Work Flow Overiew
++ Download QEMU and compile it with clang (03-qemu.sh ohci|uhci|ehci)
++ Evaluation it for a while (04-run-vshuttle.sh ohci|uhci|ehci)
+
+---
+
 Based on V-Shuttle main framework, we extended AFL to support seedpool targeting multiple kinds of input objects in parallel, with which we perform fine-grained semantics-aware fuzzing.
 
 ---
