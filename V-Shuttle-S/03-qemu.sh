@@ -31,5 +31,5 @@ fi
 pushd $QEMU_DIR
 CC=afl-clang CXX=afl-clang++ ./configure --disable-werror --disable-sanitizers --target-list="x86_64-softmmu"
 # make CFLAGS="-fprofile-instr-generate -fcoverage-mapping" -j$(nproc) x86_64-softmmu/all
-make CONFIG_FUZZ=y CFLAGS="-DCLANG_COV_DUMP -fprofile-instr-generate -fcoverage-mapping" -j$(nproc) x86_64-softmmu/all
+make CONFIG_FUZZ=y CFLAGS="-DCLANG_COV_DUMP -DVIRTFUZZ_LESS_CRASHES -fprofile-instr-generate -fcoverage-mapping" -j$(nproc) x86_64-softmmu/all
 popd
