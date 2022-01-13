@@ -3,6 +3,9 @@
 #include "hook-write.h"
 #include "hw/pci/pci.h"
 #include "hw/dma/i8257.h"
+#ifdef CLANG_COV_DUMP
+#include "clangcovdump.h"
+#endif
 
 void write_seed_file(void *buf, size_t buf_size, uint32_t oid);
 
@@ -377,6 +380,9 @@ void fuzzing_entry(void) {
         write_ops[i](opaque_ops[i], callback.reg % size_ops[i] - callback.reg % access_size, callback.val, access_size);
     }
     timer_mod(fuzz_timer, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
+#ifdef CLANG_COV_DUMP
+    llvm_profile_initialize_file(true);
+#endif
     return;
 }
 
@@ -421,6 +427,9 @@ void isa_fuzzing_entry(void) {
         write_ops[i](opaque_ops[i], reg % size_ops[i] - reg % access_size, val, access_size);
     }
     timer_mod(isa_fuzz_timer, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
+#ifdef CLANG_COV_DUMP
+    llvm_profile_initialize_file(true);
+#endif
     return;
 }
 
