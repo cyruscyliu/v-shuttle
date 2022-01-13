@@ -15,7 +15,7 @@ popd
 # copy files
 cp ./fuzz-seedpool.h $QEMU_DIR/include
 cp ./hook-write.h $QEMU_DIR/include
-cp ./03-clangcovdump.h $QEMU_DIR/include
+cp ./03-clangcovdump.h $QEMU_DIR/include/clangcovdump.h
 patch $QEMU_DIR/softmmu/memory.c ./QEMU-patch/memory.patch
 
 # patch QEMU
