@@ -2464,6 +2464,7 @@ static void write_to_testcase(void* mem, u32 len, u32 oid) {
 
   } else close(fd);
 
+  ck_free(out_file);
 }
 
 
@@ -2497,6 +2498,7 @@ static void write_with_gap(void* mem, u32 len, u32 skip_at, u32 skip_len, u32 oi
 
   } else close(fd);
 
+  ck_free(out_file);
 }
 
 
